@@ -26,6 +26,13 @@
 		<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 		<script>
 			$(document).ready(function initPage() {
+				$(document).ajaxError(function handleError(event, jqXHR, ajaxSettings, errorThrown) {
+					console.error("event:", event);
+					console.error("jqXHR:", jqXHR);
+					console.error("ajaxSettings:", ajaxSettings);
+					console.error("errorThrown:", errorThrown);
+				});
+				
 				$.get('/tasks')
 				.done(function handleResult(tasks) {
 					var taskList = tasks.map(function createHtmlTask(task) {
@@ -38,11 +45,6 @@
 								'</p>';
 					});
 					$('#task-list').html(taskList);
-				})
-				.fail(function handleError(jqXHR, textStatus, errorThrown) {
-					console.error("jqXHR:", jqXHR);
-					console.error("textStatus:", textStatus);
-					console.error("errorThrown:", errorThrown);
 				});
 			});
 		</script>
