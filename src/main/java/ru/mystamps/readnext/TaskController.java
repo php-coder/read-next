@@ -14,7 +14,7 @@ public class TaskController {
 	private final TaskService taskService;
 	
 	@GetMapping("/tasks")
-	public List<String> listTasks() {
+	public List<Task> listTasks() {
 		return taskService.findAll();
 	}
 	

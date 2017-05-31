@@ -29,7 +29,13 @@
 				$.get('/tasks')
 				.done(function handleResult(tasks) {
 					var taskList = tasks.map(function createHtmlTask(task) {
-						return '<p><div class="checkbox"><label><input type="checkbox" /> ' + task + '</label></div></p>';
+						return '<p>' +
+									'<div class="checkbox">' +
+										'<label>' +
+											'<input type="checkbox" /> ' + task.title +
+										'</label>' +
+									'</div>' +
+								'</p>';
 					});
 					$('#task-list').html(taskList);
 				})
