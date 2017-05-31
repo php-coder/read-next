@@ -24,4 +24,7 @@ public class TaskService {
 		return tasks;
 	}
 	
+	public void completeTask(Long taskId) {
+		tasks.remove(new Task(taskId, null));
+	}
 }

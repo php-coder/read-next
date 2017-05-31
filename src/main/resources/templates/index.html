@@ -25,6 +25,19 @@
 		<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
 		<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 		<script>
+			function completeTask(taskId) {
+				$.post({
+					url: '/tasks/' + taskId,
+					method: 'PUT',
+					contentType: 'application/json',
+					dataType: 'json',
+					context: $('#task-' + taskId)
+				})
+				.done(function hideTask() {
+					$(this).slideUp('fast');
+				});
+			}
+			
 			$(document).ready(function initPage() {
 				$(document).ajaxError(function handleError(event, jqXHR, ajaxSettings, errorThrown) {
 					console.error("event:", event);
@@ -36,13 +49,11 @@
 				$.get('/tasks')
 				.done(function handleResult(tasks) {
 					var taskList = tasks.map(function createHtmlTask(task) {
-						return '<p>' +
-									'<div class="checkbox">' +
-										'<label>' +
-											'<input type="checkbox" /> ' + task.title +
-										'</label>' +
-									'</div>' +
-								'</p>';
+						return '<div id="task-' + task.id + '" class="checkbox">' +
+									'<label>' +
+										'<input type="checkbox" onclick="completeTask(' + task.id + ')" /> ' + task.title +
+									'</label>' +
+								'</div>';
 					});
 					$('#task-list').html(taskList);
 				});
