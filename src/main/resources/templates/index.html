@@ -13,11 +13,32 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div class="container">
-		
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="task-list"></div>
+				</div>
+			</div>
 		</div>
 		
 		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
 		<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function initPage() {
+				$.get('/tasks')
+				.done(function handleResult(tasks) {
+					var taskList = tasks.map(function createHtmlTask(task) {
+						return '<p><div class="checkbox"><label><input type="checkbox" /> ' + task + '</label></div></p>';
+					});
+					$('#task-list').html(taskList);
+				})
+				.fail(function handleError(jqXHR, textStatus, errorThrown) {
+					console.error("jqXHR:", jqXHR);
+					console.error("textStatus:", textStatus);
+					console.error("errorThrown:", errorThrown);
+				});
+			});
+		</script>
 	</body>
 </html>
