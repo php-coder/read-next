@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class AddTask {
 	private String title;
+	private String url;
 }

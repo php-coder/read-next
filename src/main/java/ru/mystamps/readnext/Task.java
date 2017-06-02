@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class Task {
 	private final Long id;
 	private final String title;
+	private final String url;
 	
 	@Override
 	public boolean equals(Object obj) {

@@ -15,7 +15,11 @@ public class TaskService {
 	{
 		for (int i = 0; i < 5; i++) {
 			long taskId = taskCounter.incrementAndGet();
-			Task task = new Task(taskId, String.format("Task #%d", taskId));
+			Task task = new Task(
+				taskId,
+				String.format("Task #%d", taskId),
+				String.format("http://example.com/task-%d", taskId)
+			);
 			tasks.add(task);
 		}
 	}
@@ -25,12 +29,16 @@ public class TaskService {
 	}
 	
 	public Task createTask(AddTask task) {
-		Task newTask = new Task(taskCounter.incrementAndGet(), task.getTitle());
+		Task newTask = new Task(
+			taskCounter.incrementAndGet(),
+			task.getTitle(),
+			task.getUrl()
+		);
 		tasks.add(newTask);
 		return newTask;
 	}
 	
 	public void completeTask(Long taskId) {
-		tasks.remove(new Task(taskId, null));
+		tasks.remove(new Task(taskId, null, null));
 	}
 }

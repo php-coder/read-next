@@ -24,6 +24,12 @@
 								<input id="task-title" type="text" class="form-control" autofocus="autofocus" autocomplete="off" />
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">URL</div>
+								<input id="task-url" type="url" class="form-control" required="required" autocomplete="off" />
+							</div>
+						</div>
 						<button id="add-task-btn" type="button" class="btn btn-primary" onclick="createTask()">Add</button>
 					</form>
 				</div>
@@ -56,16 +62,22 @@
 			function createHtmlTask(task) {
 				return '<div id="task-' + task.id + '" class="checkbox">' +
 							'<label>' +
-								'<input type="checkbox" onclick="completeTask(' + task.id + ')" /> ' + task.title +
+								'<input type="checkbox" onclick="completeTask(' + task.id + ')" /> ' +
+								task.title + ' (<a href="' + task.url + '" target="_blank">' + task.url + '</a>)' +
 							'</label>' +
 						'</div>';
 			}
 			
 			function createTask() {
 				var title = $('#task-title').val();
-				$.post('/tasks', { title: title })
+				var url = $('#task-url').val();
+				$.post('/tasks', {
+					title: title,
+					url: url
+				})
 				.done(function updateTaskList(response) {
 					$('#task-title').val('');
+					$('#task-url').val('');
 					var task = createHtmlTask(response);
 					$('#task-list').prepend(task);
 				})
