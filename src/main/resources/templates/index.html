@@ -16,6 +16,21 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-12">
+					<form class="form-inline">
+						<h3>Add a task</h3>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">Task title</div>
+								<input id="task-title" type="text" class="form-control" autofocus="autofocus" autocomplete="off" />
+							</div>
+						</div>
+						<button id="add-task-btn" type="button" class="btn btn-primary" onclick="createTask()">Add</button>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+						<h3>Current tasks</h3>
 					<div id="task-list"></div>
 				</div>
 			</div>
@@ -44,6 +59,16 @@
 								'<input type="checkbox" onclick="completeTask(' + task.id + ')" /> ' + task.title +
 							'</label>' +
 						'</div>';
+			}
+			
+			function createTask() {
+				var title = $('#task-title').val();
+				$.post('/tasks', { title: title })
+				.done(function updateTaskList(response) {
+					$('#task-title').val('');
+					var task = createHtmlTask(response);
+					$('#task-list').prepend(task);
+				})
 			}
 			
 			$(document).ready(function initPage() {

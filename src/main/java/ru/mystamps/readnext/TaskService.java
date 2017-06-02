@@ -24,6 +24,12 @@ public class TaskService {
 		return tasks;
 	}
 	
+	public Task createTask(AddTask task) {
+		Task newTask = new Task(taskCounter.incrementAndGet(), task.getTitle());
+		tasks.add(newTask);
+		return newTask;
+	}
+	
 	public void completeTask(Long taskId) {
 		tasks.remove(new Task(taskId, null));
 	}

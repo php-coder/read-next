@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,13 @@ public class TaskController {
 	@GetMapping("/tasks")
 	public List<Task> listTasks() {
 		return taskService.findAll();
+	}
+	
+	@PostMapping("/tasks")
+	public Task listTasks(AddTask taskDto) {
+		Task task = taskService.createTask(taskDto);
+		
+		return task;
 	}
 	
 	@PutMapping("/tasks/{id}")
