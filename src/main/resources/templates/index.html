@@ -36,7 +36,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-						<h3>Current tasks</h3>
+						<h3>Current tasks&nbsp;<span id="tasks-counter" class="badge">0</span></h3>
 					<div id="task-list"></div>
 				</div>
 			</div>
@@ -56,7 +56,17 @@
 				})
 				.done(function hideTask() {
 					$(this).slideUp('fast');
+					updateTaskCounter(-1);
 				});
+			}
+			
+			function updateTaskCounter(delta) {
+				var value = $('#tasks-counter').text();
+				var cnt = parseInt(value, 10);
+				if (isNaN(cnt)) {
+					cnt = 0;
+				}
+				$('#tasks-counter').text(cnt + delta);
 			}
 			
 			function createHtmlTask(task) {
@@ -80,6 +90,7 @@
 					$('#task-url').val('');
 					var task = createHtmlTask(response);
 					$('#task-list').prepend(task);
+					updateTaskCounter(1);
 				})
 			}
 			
@@ -95,6 +106,7 @@
 				.done(function handleResult(tasks) {
 					var taskList = tasks.map(createHtmlTask);
 					$('#task-list').html(taskList);
+					updateTaskCounter(tasks.length);
 				});
 			});
 		</script>
