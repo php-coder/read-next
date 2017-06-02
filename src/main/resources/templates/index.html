@@ -38,6 +38,14 @@
 				});
 			}
 			
+			function createHtmlTask(task) {
+				return '<div id="task-' + task.id + '" class="checkbox">' +
+							'<label>' +
+								'<input type="checkbox" onclick="completeTask(' + task.id + ')" /> ' + task.title +
+							'</label>' +
+						'</div>';
+			}
+			
 			$(document).ready(function initPage() {
 				$(document).ajaxError(function handleError(event, jqXHR, ajaxSettings, errorThrown) {
 					console.error("event:", event);
@@ -48,13 +56,7 @@
 				
 				$.get('/tasks')
 				.done(function handleResult(tasks) {
-					var taskList = tasks.map(function createHtmlTask(task) {
-						return '<div id="task-' + task.id + '" class="checkbox">' +
-									'<label>' +
-										'<input type="checkbox" onclick="completeTask(' + task.id + ')" /> ' + task.title +
-									'</label>' +
-								'</div>';
-					});
+					var taskList = tasks.map(createHtmlTask);
 					$('#task-list').html(taskList);
 				});
 			});
