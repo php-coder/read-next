@@ -1,5 +1,6 @@
 package ru.mystamps.readnext;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
@@ -18,7 +19,8 @@ public class TaskService {
 			Task task = new Task(
 				taskId,
 				String.format("Task #%d", taskId),
-				String.format("http://example.com/task-%d", taskId)
+				String.format("http://example.com/task-%d", taskId),
+				Collections.singleton(String.format("tag-%d", i+1))
 			);
 			tasks.add(task);
 		}
@@ -32,13 +34,14 @@ public class TaskService {
 		Task newTask = new Task(
 			taskCounter.incrementAndGet(),
 			task.getTitle(),
-			task.getUrl()
+			task.getUrl(),
+			Collections.emptySet()
 		);
 		tasks.add(newTask);
 		return newTask;
 	}
 	
 	public void completeTask(Long taskId) {
-		tasks.remove(new Task(taskId, null, null));
+		tasks.remove(new Task(taskId, null, null, null));
 	}
 }

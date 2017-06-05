@@ -1,6 +1,7 @@
 package ru.mystamps.readnext;
 
 import java.util.Objects;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ public class Task {
 	private final Long id;
 	private final String title;
 	private final String url;
+	private final Set<String> tags;
 	
 	@Override
 	public boolean equals(Object obj) {

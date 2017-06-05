@@ -69,12 +69,18 @@
 				$('#tasks-counter').text(cnt + delta);
 			}
 			
+			function createHtmlTag(tag) {
+				return '<span class="text-muted small">#' + tag + '</span>';
+			}
+			
 			function createHtmlTask(task) {
+				var tags = task.tags.map(createHtmlTag).join(', ');
 				return '<div id="task-' + task.id + '" class="checkbox">' +
 							'<label>' +
 								'<input type="checkbox" onclick="completeTask(' + task.id + ')" /> ' +
 								task.title + ' (<a href="' + task.url + '" target="_blank">' + task.url + '</a>)' +
-							'</label>' +
+							'</label> ' +
+							tags +
 						'</div>';
 			}
 			
