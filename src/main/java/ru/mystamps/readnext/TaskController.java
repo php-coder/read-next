@@ -43,4 +43,9 @@ public class TaskController {
 		response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 	}
 	
+	@GetMapping("/tasks/tags")
+	public List<String> listTags() {
+		return taskService.findAllTags();
+	}
+	
 }

@@ -2,8 +2,10 @@ package ru.mystamps.readnext;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -35,7 +37,7 @@ public class TaskService {
 			taskCounter.incrementAndGet(),
 			task.getTitle(),
 			task.getUrl(),
-			Collections.emptySet()
+			task.getTags()
 		);
 		tasks.add(newTask);
 		return newTask;
@@ -43,5 +45,9 @@ public class TaskService {
 	
 	public void completeTask(Long taskId) {
 		tasks.remove(new Task(taskId, null, null, null));
+	}
+
+	public List<String> findAllTags() {
+		return tasks.stream().map(Task::getTags).flatMap(Set::stream).collect(Collectors.toList());
 	}
 }
